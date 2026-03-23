@@ -281,8 +281,280 @@
     .lang-btn { padding: 5px 8px; font-size: 10px; }
   }
 </style>
+
+<!-- LOCK SCREEN STYLES -->
+<style>
+#lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0d0f0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
+}
+#lock-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+.lock-wrap {
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 28px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 4px;
+}
+.lock-eyebrow {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.7;
+}
+.lock-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(201,168,76,0.2);
+}
+.lock-title {
+  font-size: clamp(30px, 5vw, 42px);
+  font-weight: 700;
+  color: #f0ece4;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.lock-title em {
+  font-style: italic;
+  color: #c9a84c;
+  display: block;
+}
+.lock-divider {
+  width: 36px;
+  height: 2px;
+  background: #c9a84c;
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+.lock-desc {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13.5px;
+  color: #a09888;
+  font-weight: 300;
+  margin-bottom: 20px;
+  line-height: 2;
+  letter-spacing: 0.01em;
+}
+.lock-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 32px;
+}
+.lock-tag {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #c9a84c;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.22);
+  padding: 5px 11px;
+  border-radius: 2px;
+}
+.lock-field-label {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6a6050;
+  margin-bottom: 10px;
+}
+.lock-input-wrap {
+  position: relative;
+  margin-bottom: 8px;
+}
+.lock-input {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 3px;
+  padding: 14px 16px;
+  font-size: 18px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  color: #f0ece4;
+  letter-spacing: 0.3em;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s;
+}
+.lock-input:focus {
+  border-color: rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.04);
+}
+.lock-input::placeholder {
+  color: rgba(201,168,76,0.2);
+  font-size: 14px;
+  letter-spacing: 0.3em;
+}
+.lock-error {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11.5px;
+  color: #e07060;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  letter-spacing: 0.03em;
+}
+.lock-error.show { opacity: 1; }
+.lock-btn {
+  width: 100%;
+  background: #c9a84c;
+  color: #0d0f0a;
+  border: none;
+  padding: 15px 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.lock-btn:hover { background: #e8c97a; transform: translateY(-1px); }
+.lock-btn:active { transform: translateY(0); }
+.lock-btn-arrow {
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+.lock-btn:hover .lock-btn-arrow { transform: translateX(4px); }
+.lock-footer {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11px;
+  color: #4a4438;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lock-tg-link {
+  color: #8a7a5a;
+  text-decoration: none;
+  font-size: 11px;
+  font-family: 'Noto Sans KR', sans-serif;
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.lock-tg-link:hover {
+  color: #c9a84c;
+  border-color: #c9a84c;
+}
+.lock-shake { animation: shake 0.4s ease; }
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+.lock-fade-out { animation: fadeOut 0.6s ease forwards; }
+@keyframes fadeOut {
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.015);pointer-events:none}
+}
+@media(max-width:520px){
+  .lock-wrap{padding:24px 18px;margin:16px;}
+}
+</style>
 </head>
 <body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-wrap">
+    <div class="lock-eyebrow">hongk · hk_money_story</div>
+    <div class="lock-title">홍크의<br><em>The Vault</em></div>
+    <div class="lock-divider"></div>
+    <div class="lock-desc">
+      홍콩 현지 자산운용사에서 실제로 활용하는<br>
+      글로벌 투자 소스, 기관 자금 추적 데이터,<br>
+      매크로 분석 툴을 엄선해 정리한 자료실입니다.
+    </div>
+    <div class="lock-tags">
+      <span class="lock-tag">글로벌 매크로</span>
+      <span class="lock-tag">기관 포지셔닝</span>
+      <span class="lock-tag">온체인 데이터</span>
+      <span class="lock-tag">홍콩 현지 소스</span>
+    </div>
+    <div class="lock-field-label">Access Code</div>
+    <div class="lock-input-wrap">
+      <input
+        class="lock-input"
+        id="lock-input"
+        type="password"
+        placeholder="· · · · · · · ·"
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter')tryUnlock()"
+      />
+    </div>
+    <div class="lock-error" id="lock-error">잘못된 코드입니다. 다시 시도해주세요.</div>
+    <button class="lock-btn" onclick="tryUnlock()">
+      입장하기 <span class="lock-btn-arrow">→</span>
+    </button>
+    <div class="lock-footer">
+      <span>© hongk · hk_money_story</span>
+      <a href="https://t.me/hongk_in_hk" target="_blank" class="lock-tg-link" style="color:#c9a84c;border-bottom:1px solid rgba(201,168,76,0.5);font-size:12px;letter-spacing:0.04em;">입장문의 · @hongk_in_hk</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const PW = 'hongk2026';
+  window.tryUnlock = function() {
+    const val = document.getElementById('lock-input').value;
+    const wrap = document.querySelector('.lock-wrap');
+    const err = document.getElementById('lock-error');
+    if (val === PW) {
+      document.getElementById('lock-screen').classList.add('lock-fade-out');
+      setTimeout(() => {
+        document.getElementById('lock-screen').style.display = 'none';
+        document.body.style.overflow = '';
+      }, 600);
+    } else {
+      wrap.classList.remove('lock-shake');
+      void wrap.offsetWidth;
+      wrap.classList.add('lock-shake');
+      err.classList.add('show');
+      document.getElementById('lock-input').value = '';
+      document.getElementById('lock-input').focus();
+    }
+  };
+  document.body.style.overflow = 'hidden';
+})();
+</script>
 <div class="noise"></div>
 
 <div class="lang-bar">
