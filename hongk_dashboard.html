@@ -46,19 +46,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--t4);border-radius:3px}
 
-#gate{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .5s,transform .5s}
+#gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .6s,transform .6s;overflow:hidden}
 #gate.hidden{opacity:0;pointer-events:none;transform:scale(1.01)}
-.gate-box{width:360px;text-align:center}
-.gate-brand{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.12em}
-.gate-sub{font-size:12px;color:var(--t3);margin:6px 0 44px;font-weight:400}
-.gate-input{width:100%;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;color:var(--text);font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-align:center;outline:none;transition:border .3s;box-shadow:var(--card-shadow)}
-.gate-input:focus{border-color:var(--green)}
+.gate-bg{position:absolute;inset:0;background:var(--bg);overflow:hidden}
+.gate-bg-cards{position:absolute;inset:-40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:40px;transform:rotate(-6deg) scale(1.15);opacity:.7;filter:blur(0.5px);pointer-events:none}
+.gate-bg-card{background:var(--white);border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.gate-bg-card-label{width:60%;height:10px;background:#e2e1dd;border-radius:5px;margin-bottom:18px}
+.gate-bg-card-num{width:45%;height:28px;background:#d8d6d1;border-radius:8px;margin-bottom:12px}
+.gate-bg-card-bar{width:80%;height:8px;background:#e8e7e3;border-radius:4px;margin-bottom:8px}
+.gate-bg-card-bar2{width:55%;height:8px;background:#eeedea;border-radius:4px}
+.gate-bg-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(244,243,240,.15) 0%,rgba(244,243,240,.7) 55%,rgba(244,243,240,.95) 80%)}
+.gate-content{position:relative;z-index:2;width:400px;text-align:center}
+.gate-logo-wrap{margin-bottom:32px}
+.gate-brand{font-size:16px;font-weight:800;color:var(--text);letter-spacing:.14em}
+.gate-tagline{font-size:20px;font-weight:700;color:var(--text);margin:24px 0 8px;line-height:1.35}
+.gate-desc{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:36px}
+.gate-card{background:var(--white);border-radius:20px;padding:32px 28px;box-shadow:0 4px 24px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.04)}
+.gate-input-label{font-size:11px;color:var(--t3);font-weight:600;text-align:left;margin-bottom:8px;letter-spacing:.03em}
+.gate-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:15px 18px;color:var(--text);font-family:var(--mono);font-size:15px;letter-spacing:.1em;text-align:center;outline:none;transition:border .3s,box-shadow .3s}
+.gate-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,160,107,.1)}
 .gate-input::placeholder{color:var(--t4);font-size:13px;letter-spacing:.04em}
-.gate-btn{width:100%;margin-top:12px;background:var(--text);border:none;color:var(--white);padding:14px;border-radius:12px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
-.gate-btn:hover{opacity:.85}
-.gate-error{font-size:11px;color:var(--red);margin-top:14px;opacity:0;transition:opacity .3s}
+.gate-btn{width:100%;margin-top:14px;background:var(--text);border:none;color:var(--white);padding:15px;border-radius:12px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.gate-btn:hover{opacity:.88;transform:translateY(-1px)}
+.gate-error{font-size:11px;color:var(--red);margin-top:12px;opacity:0;transition:opacity .3s;font-weight:500}
 .gate-error.show{opacity:1}
-.gate-footer{font-size:11px;color:var(--t3);margin-top:40px;line-height:1.7}
+.gate-contact{margin-top:28px;font-size:12px;color:var(--t3);line-height:1.8}
+.gate-contact a{color:var(--green);font-weight:600;text-decoration:none;transition:opacity .2s}
+.gate-contact a:hover{opacity:.7}
+.gate-members{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:11px;color:var(--t3);font-weight:500}
+.gate-members-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 
 .topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.85);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:200;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .brand{display:flex;align-items:center;gap:16px}
@@ -271,11 +287,46 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 .mob-btn-icon{font-size:16px}
 @media(max-width:1024px){.signal-hero,.liq-hero,.smart-grid,.recession-hero,.alloc-hero,.chart-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.topbar-nav{display:none}.mobile-nav{display:block}.main{padding:104px 14px 100px}.cards-g,.signal-grid,.crypto-grid,.heatmap-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.cards-g,.signal-grid,.crypto-grid{grid-template-columns:1fr}.gate-box{width:88%}}
+@media(max-width:480px){.cards-g,.signal-grid,.crypto-grid{grid-template-columns:1fr}.gate-content{width:90%;padding:0 8px}.gate-tagline{font-size:17px}.gate-bg-cards{display:none}}
 </style>
 </head>
 <body>
-<div id="gate"><div class="gate-box"><div class="gate-brand">HK · INSIGHT</div><div class="gate-sub">Private terminal — Members only</div><input type="password" class="gate-input" id="gate-pw" placeholder="Access code" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()"><button class="gate-btn" onclick="checkGate()">Enter terminal</button><div class="gate-error" id="gate-error">접근 코드가 일치하지 않습니다</div><div class="gate-footer">이 터미널은 HK Insight 멤버 전용입니다<br>접근 코드는 텔레그램 채널에서 확인하세요</div></div></div>
+<div id="gate">
+<div class="gate-bg">
+<div class="gate-bg-cards">
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+<div class="gate-bg-card"><div class="gate-bg-card-label"></div><div class="gate-bg-card-num"></div><div class="gate-bg-card-bar"></div><div class="gate-bg-card-bar2"></div></div>
+</div>
+<div class="gate-bg-overlay"></div>
+</div>
+<div class="gate-content">
+<div class="gate-logo-wrap"><div class="gate-brand">HK · INSIGHT</div></div>
+<div class="gate-tagline">홍콩 자산운용사가<br>매일 아침 여는 화면</div>
+<div class="gate-desc">우리가 실제로 돈을 굴릴 때 보는 데이터를<br>멤버에게 그대로 공개합니다</div>
+<div class="gate-card">
+<div class="gate-input-label">Access code</div>
+<input type="password" class="gate-input" id="gate-pw" placeholder="멤버 전용 코드를 입력하세요" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()">
+<button class="gate-btn" onclick="checkGate()">Enter terminal →</button>
+<div class="gate-error" id="gate-error">접근 코드가 일치하지 않습니다</div>
+</div>
+<div class="gate-contact">
+입장 문의 · Telegram<br>
+<a href="https://t.me/hongk_in_hk" target="_blank">@hongk_in_hk</a><br>
+<span style="font-size:10px;color:var(--t4)">클릭 시 텔레그램으로 바로 이동합니다</span>
+</div>
+<div class="gate-members"><div class="gate-members-dot"></div>현재 멤버 접속 중</div>
+</div>
+</div>
 
 <div class="topbar"><div class="brand"><div class="brand-logo">HK · INSIGHT</div><div class="live-badge"><div class="live-dot"></div>LIVE</div></div><div class="topbar-nav"><button class="nav-btn active" onclick="showPage('signals',this)">시장 신호</button><button class="nav-btn" onclick="showPage('liquidity',this)">유동성</button><button class="nav-btn" onclick="showPage('smart',this)">스마트머니</button><button class="nav-btn" onclick="showPage('heatmap',this)">히트맵</button><button class="nav-btn" onclick="showPage('recession',this)">침체확률</button><button class="nav-btn" onclick="showPage('crypto',this)">크립토</button><button class="nav-btn" onclick="showPage('calendar',this)">캘린더</button><button class="nav-btn" onclick="showPage('allocation',this)">배분</button><button class="nav-btn" onclick="showPage('alerts',this)">알림</button><button class="nav-btn" onclick="showPage('charts',this)">차트</button></div><div class="topbar-right" style="display:flex;align-items:center;gap:14px"><div class="status-dot" id="status-dot"></div><div class="clock" id="clock"></div></div></div>
 <div class="ticker-bar"><div class="ticker-scroll" id="ticker-scroll"></div></div>
@@ -307,7 +358,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
-const CONFIG={password:'hkinsight2024',refreshInterval:90000,referralUrl:'https://www.binance.com/en/futures/ref/YOUR_CODE_HERE',proxies:[url=>`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,url=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,url=>`https://corsproxy.io/?${encodeURIComponent(url)}`]};
+const CONFIG={password:'hongk2026',refreshInterval:90000,referralUrl:'https://www.binance.com/en/futures/ref/YOUR_CODE_HERE',proxies:[url=>`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,url=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,url=>`https://corsproxy.io/?${encodeURIComponent(url)}`]};
 function checkGate(){const pw=document.getElementById('gate-pw').value;if(pw===CONFIG.password){sessionStorage.setItem('hk_auth','true');unlockApp()}else{document.getElementById('gate-error').classList.add('show');document.getElementById('gate-pw').value='';setTimeout(()=>document.getElementById('gate-error').classList.remove('show'),3000)}}
 function unlockApp(){document.getElementById('gate').classList.add('hidden');document.getElementById('app').classList.add('visible');setTimeout(()=>{document.getElementById('gate').style.display='none'},600);const r=document.getElementById('referral-link');if(r)r.href=CONFIG.referralUrl;loadAll()}
 if(sessionStorage.getItem('hk_auth')==='true')unlockApp();else document.getElementById('gate-pw').focus();
